@@ -1,0 +1,59 @@
+apiVersion: networking.k8s.io/v1beta1
+ kind: Ingress
+ metadata:
+   annotations:
+     kubernetes.io/ingress.class: "nginx"
+     nginx.ingress.kubernetes.io/ssl-redirect: "false"
+     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+     nginx.ingress.kubernetes.io/rewrite-target: /common/crosseditor/imgDownload.do?path=$1&name=$3
+   name: example-sc-ingress
+   namespace: example
+ spec:
+   rules:
+   - host: example.com
+     http:
+       paths:
+       - backend:
+           serviceName: example-service01
+           servicePort: 8080
+         path: /common/crosseditor/sc/images/([_0-9a-z-]+)(/)([_0-9a-z-.]+)
+—
+apiVersion: networking.k8s.io/v1beta1
+ kind: Ingress
+ metadata:
+   annotations:
+     kubernetes.io/ingress.class: "nginx"
+     nginx.ingress.kubernetes.io/ssl-redirect: "false"
+     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+     nginx.ingress.kubernetes.io/rewrite-target: /common/crosseditor/annonymousImgDownload.do?path=$1&name=$3
+   name: example-nsc-ingress
+   namespace: example
+ spec:
+   rules:
+   - host: example.com
+     http:
+       paths:
+       - backend:
+           serviceName: example-service01
+           servicePort: 8080
+         path: /common/crosseditor/nsc/images/([_0-9a-z-]+)(/)([_0-9a-z-.]+)
+—
+apiVersion: networking.k8s.io/v1beta1
+ kind: Ingress
+ metadata:
+   annotations:
+     kubernetes.io/ingress.class: "nginx"
+     nginx.ingress.kubernetes.io/ssl-redirect: "false"
+     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+     nginx.ingress.kubernetes.io/rewrite-target: /common/annonymous/crosseditor/annonymousImgDownload.do?path=$1&name=$3
+   name: example-annonymous-ingress
+   namespace: example
+ spec:
+   rules:
+   - host: example.com
+     http:
+       paths:
+       - backend:
+           serviceName: example-service01
+           servicePort: 8080
+         path: /common/crosseditor/annonymous/images/([_0-9a-z-]+)(/)([_0-9a-z-.]+)
